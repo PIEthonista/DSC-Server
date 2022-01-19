@@ -7,6 +7,29 @@ shinyServer(function(input, output, session) {
   string <- reactive(paste("Good day and welcome ", input$name, "!"))
   output$greeting <- renderText(string())
   
+  #-----------------------------ERROR SECTION/NOT WORKING HAIHHHH
+  # Concepr refer to: https://gist.github.com/aagarw30/69feeeb7e813788a753b71ef8c0877eb
+  movieordrama <- c("test")
+  year <- c("test")
+  duration <- c("test")
+  genre <- c("test")
+  kids <- c(FALSE)
+  print("Before")
+  storage <- reactiveValues(df=data.frame(movieordrama,year,duration,genre,kids))
+  print("After")
+  
+  observeEvent(input$add1, {
+    movieordrama=input$movieordrama
+    year=input$year
+    duration=input$duration
+    genre=input$genre
+    kids=input$kids
+    temp <- data.frame(movieordrama, year, duration, genre, kids)
+    storage$df <- rbind(storage$df, temp)
+    print("ADDED")  #to test if above code section is run
+  })
+  #-----------------------------
+  
   data <- reactive({
     switch(input$movieordrama,
            "Movie" = moviee,
