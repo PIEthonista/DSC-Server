@@ -67,10 +67,10 @@ shinyUI(fluidPage(
                )
              ),
              
-             ),
+    ),
     
     tabPanel("Discoverer", icon = icon("search"),
-              titlePanel("What to watch?"),
+             titlePanel("What to watch?"),
              sidebarLayout(
                sidebarPanel(
                  textInput("name","Your name: "),
@@ -126,7 +126,8 @@ shinyUI(fluidPage(
                  
                  checkboxInput("kids","Suitable for kids",value=FALSE),
                  
-                 submitButton("Search",icon("search",lib="glyphicon"))),
+                 #submitButton("Search",icon("search",lib="glyphicon"))),
+                 actionButton("search", "Search",icon("search",lib="glyphicon"))),
                
                mainPanel(
                  fluidRow(
@@ -134,9 +135,9 @@ shinyUI(fluidPage(
                    dataTableOutput("Drama")
                    #It will display data table that show a list of movie or TV shows
                  )
-                 )
                )
-             ),
+             )
+    ),
     
     tabPanel("Recommendation", icon = icon("star"),
              titlePanel("Movies that you may like"),
@@ -173,7 +174,7 @@ shinyUI(fluidPage(
                column(1,"")
              )
     ),
-             
+    
     tabPanel("About", 
              sidebarPanel(
                h3("Purpose of this App"),
@@ -294,9 +295,9 @@ shinyUI(fluidPage(
                )
                
              )
-             )
     )
   )
+)
 )
 
 
