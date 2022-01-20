@@ -61,6 +61,7 @@ shinyUI(fluidPage(
                       style = "color:#4682B4")
                ),
                mainPanel(
+                 #uiOutput("img"),
                  img(src="Poster.png", height="100%", width="100%",align="center"),
                  h6("Compilation of movies and TV shows",align = "center",
                     style = "color:#6495ED"),
@@ -299,7 +300,3 @@ shinyUI(fluidPage(
   )
 )
 )
-
-
-
-

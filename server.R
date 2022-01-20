@@ -16,6 +16,11 @@ shinyServer(function(input, output, session) {
   kids <- c(FALSE)
   storage <- reactiveValues(df=data.frame(movieordrama,year,duration,genre,kids))
   
+  getMode <- function(v) {
+    uniqv <- unique(v)
+    uniqv[which.max(tabulate(match(v, uniqv)))]
+  }
+  
   observeEvent(input$search, {
   #test <- observeEvent(c(input$search,input$movieordrama,input$year,input$duration,input$genre,input$kids), {
     movieordrama=input$movieordrama
@@ -27,6 +32,11 @@ shinyServer(function(input, output, session) {
     storage$df <- rbind(storage$df, temp)
     print("===============================")
     print(storage$df)  #to test if above code section is run
+    print(getMode(storage$df$movieordrama))
+    print(getMode(storage$df$year))
+    print(getMode(storage$df$duration))
+    print(getMode(storage$df$genre))
+    print(getMode(storage$df$kids))
   })
     
     data <- eventReactive(input$search, {
@@ -156,5 +166,5 @@ shinyServer(function(input, output, session) {
     output$Drama <- DT::renderDataTable({
       DT::datatable(data(),rownames = FALSE)
     })
-
+    
 })
