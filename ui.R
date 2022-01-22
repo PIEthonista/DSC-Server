@@ -14,26 +14,29 @@ library(shinydashboard)
 library(shinydisconnect)
 library(DT)
 library(tibble)
+library(data.table)
 
 # read the data set
 #mydata <- data.frame(read.csv("imdb_top_1000.csv"))
 mydata <- data.frame(read.csv("https://raw.githubusercontent.com/PIEthonista/DSC-Data-Hosting/main/imdb_top_1000.csv"))
 # filter data and get the important points needed for customer
-# displaydata <- mydata[-c(1,4,9,15,16)]
-displaydata <- mydata[-c(1,9,15,16)]
+displaydata <- mydata[-c(9,15,16)]
 #filter out drama data set
 dramavalidity <- data.frame(str_detect(displaydata$Genre, "Drama"))
 dramafilter <- cbind(displaydata, drama = dramavalidity[,1])
 drama <- dramafilter[!(dramafilter$drama=="FALSE"),]
-dramaa <- drama[,-12]
+dramaa <- drama[,-c(1,14)]
+recommendationdrama <- drama [,-14]
 #filter out movie data set
 movie <- dramafilter[!(dramafilter$drama=="TRUE"),]
-moviee <- movie [,-12]
+moviee <- movie [,-c(1,14)]
+recommendationmovie <- movie [,-14]
 
 
 shinyUI(fluidPage(
   useShinyjs(),
-  theme = shinytheme("readable"), #Select a theme for shiny
+  #theme = shinytheme("readable"), #Select a theme for shiny
+  theme = shinytheme("sandstone"), #Select a theme for shiny
   navbarPage(
     HTML(paste("<p><font color = '#6495ED' font size = '5' font face = 'Incised901 Nd BT'>",
                "Netflix Movies and TV Shows",
@@ -78,17 +81,17 @@ shinyUI(fluidPage(
                  br(),
                  radioButtons("movieordrama","Movie or TV Show", c("Movie","TV Show")),
                  selectInput("year","Year",c("-",
-                                             "1920s(1920-1929)",
-                                             "1930s(1930-1939)",
-                                             "1940s(1940-1949)",
-                                             "1950s(1950-1959)",
-                                             "1960s(1960-1969)",
-                                             "1970s(1970-1979)",
-                                             "1980s(1980-1989)",
-                                             "1990s(1990-1999)",
-                                             "2000s(2000-2009)",
-                                             "2010s(2010-2019)",
-                                             "2020s(2020-2029)")),
+                                             "1920s",
+                                             "1930s",
+                                             "1940s",
+                                             "1950s",
+                                             "1960s",
+                                             "1970s",
+                                             "1980s",
+                                             "1990s",
+                                             "2000s",
+                                             "2010s",
+                                             "2020s")),
                  
                  selectInput("duration","Duration",c("-",
                                                      "30-60",
@@ -128,14 +131,16 @@ shinyUI(fluidPage(
                  checkboxInput("kids","Suitable for kids",value=FALSE),
                  
                  #submitButton("Search",icon("search",lib="glyphicon"))),
-                 actionButton("search", "Search",icon("search",lib="glyphicon"))),
+                 actionButton("search", "Search",icon("search",lib="glyphicon")),
+                 width=2),
                
                mainPanel(
                  fluidRow(
                    h1(textOutput("greeting")),
                    dataTableOutput("Drama")
                    #It will display data table that show a list of movie or TV shows
-                 )
+                 ),
+                 width=10
                )
              )
     ),
@@ -148,30 +153,35 @@ shinyUI(fluidPage(
                #Title column size
                column(1,""),
                column(2,
-                      "Movie 1"),style="height=100px;background-color: white;color:black",
+                      htmlOutput("picture1"),
+                      htmlOutput("title1"),
+                      textOutput("rating1"),
+                      textOutput("desc1")
+                      ),style="height=200px;background-color: white;color:black",
                column(2,
-                      "Movie 2"),style="height=100px;background-color: white;color:black",
+                      htmlOutput("picture2"),
+                      htmlOutput("title2"),
+                      textOutput("rating2"),
+                      textOutput("desc2")
+                      ),style="height=200px;background-color: white;color:black",
                column(2,
-                      "Movie 3"),style="height=100px;background-color: white;color:black",
+                      htmlOutput("picture3"),
+                      htmlOutput("title3"),
+                      textOutput("rating3"),
+                      textOutput("desc3")
+                      ),style="height=200px;background-color: white;color:black",
                column(2,
-                      "Movie 4"),style="height=100px;background-color: white;color:black",
+                      htmlOutput("picture4"),
+                      htmlOutput("title4"),
+                      textOutput("rating4"),
+                      textOutput("desc4")
+                      ),style="height=200px;background-color: white;color:black",
                column(2,
-                      "Movie 5"),style="height=100px;background-color: white;color:black",
-               column(1,"")
-             ),
-             fluidRow(
-               #Title column size
-               column(1,""),
-               column(2,
-                      "Content 1"),style="height=100px;background-color: white;color:black",
-               column(2,
-                      "Content 2"),style="height=100px;background-color: white;color:black",
-               column(2,
-                      "Content 3"),style="height=100px;background-color: white;color:black",
-               column(2,
-                      "Content 4"),style="height=100px;background-color: white;color:black",
-               column(2,
-                      "Content 5"),style="height=100px;background-color: white;color:black",
+                      htmlOutput("picture5"),
+                      htmlOutput("title5"),
+                      textOutput("rating5"),
+                      textOutput("desc5")
+                      ),style="height=200px;background-color: white;color:black",
                column(1,"")
              )
     ),
@@ -218,11 +228,11 @@ shinyUI(fluidPage(
                             div(class="panel-body",
                                 width="600px",align="center",
                                 div(
-                                  tags$img(src="yixian.jpg",
+                                  tags$img(src="jiayu.jpg",
                                            width="80px",height="140px")
                                 ),
                                 div(
-                                  tags$h5("Goh Yi Xian"),
+                                  tags$h5("Lim Jia Yu"),
                                   tags$h6("Project Lead")
                                 )
                             )
@@ -234,11 +244,11 @@ shinyUI(fluidPage(
                             div(class="panel-body",
                                 width="600px",align="center",
                                 div(
-                                  tags$img(src="jiayu.jpg",
+                                  tags$img(src="yixian.jpg",
                                            width="80px",height="140px")
                                 ),
                                 div(
-                                  tags$h5("Lim Jia Yu"),
+                                  tags$h5("Goh Yi Xian"),
                                   tags$h6("Web Developer")
                                 )
                             )
