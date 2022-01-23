@@ -301,89 +301,87 @@ shinyServer(function(input, output, session) {
 # Random generation for NAs
   observeEvent(input$search,{
     recommendation <- data.frame(recommendationtest())
-    #for NAs
-    random<-sample(1:nrow(moviee), 5, replace=FALSE)
     #for not NAs
     if(nrow(recommendation)==0){
-      random2 <- sample(1:nrow(moviee), 5, replace=FALSE)
+      random <- sample(1:nrow(moviee), 5, replace=FALSE)
     } else if(nrow(recommendation)==1){
-      random2 <- c(sample(1:nrow(moviee), 4, replace=FALSE), sample(1:nrow(recommendation), 1, replace=FALSE))
+      random <- c(sample(1:nrow(moviee), 4, replace=FALSE), sample(1:nrow(recommendation), 1, replace=FALSE))
     } else if(nrow(recommendation)==2){
-      random2 <- c(sample(1:nrow(moviee), 3, replace=FALSE), sample(1:nrow(recommendation), 2, replace=FALSE))
+      random <- c(sample(1:nrow(moviee), 3, replace=FALSE), sample(1:nrow(recommendation), 2, replace=FALSE))
     } else if(nrow(recommendation)==3){
-      random2 <- c(sample(1:nrow(moviee), 2, replace=FALSE), sample(1:nrow(recommendation), 3, replace=FALSE))
+      random <- c(sample(1:nrow(moviee), 2, replace=FALSE), sample(1:nrow(recommendation), 3, replace=FALSE))
     } else if(nrow(recommendation)==4){
-      random2 <- c(sample(1:nrow(moviee), 1, replace=FALSE), sample(1:nrow(recommendation), 4, replace=FALSE))
+      random <- c(sample(1:nrow(moviee), 1, replace=FALSE), sample(1:nrow(recommendation), 4, replace=FALSE))
     } else if(nrow(recommendation)>=5){
-      random2 <- sample(1:nrow(recommendation), 5, replace=FALSE)
+      random <- sample(1:nrow(recommendation), 5, replace=FALSE)
     }
 
-    if(!is.na(recommendation[random2[1],1])){
-      src1 = recommendation[random2[1],1]
+    if(!is.na(recommendation[random[1],1])){
+      src1 = recommendation[random[1],1]
       output$picture1 <- renderText({c('<img src="',src1,'" width="188" height="274">')})
-      output$title1 <- renderText({c('<font size="5">',recommendation[random2[1],2],'</font>')})
-      output$rating1 <- renderText({c('Rated ',recommendation[random2[1],7])})
-      output$desc1 <- renderText({recommendation[random2[1],8]})
+      output$title1 <- renderText({c('<font size="5">',recommendation[random[1],2],'</font>')})
+      output$rating1 <- renderText({c('Rated ',recommendation[random[1],7])})
+      output$desc1 <- renderText({recommendation[random[1],8]})
     } else {
       src1 = mydata[random[1],1]
       output$picture1 <- renderText({c('<img src="',src1,'" width="188" height="274">')})
-      output$title1 <- renderText({c('<font size="5">',recommendation[random[1],2],'</font>')})
+      output$title1 <- renderText({c('<font size="5">',mydata[random[1],2],'</font>')})
       output$rating1 <- renderText({c('Rated ',mydata[random[1],7])})
       output$desc1 <- renderText({mydata[random[1],8]})
     }
     
-    if(!is.na(recommendation[random2[2],1])){
-      src2 = recommendation[random2[2],1]
+    if(!is.na(recommendation[random[2],1])){
+      src2 = recommendation[random[2],1]
       output$picture2 <- renderText({c('<img src="',src2,'" width="188" height="274">')})
-      output$title2 <- renderText({c('<font size="5">',recommendation[random2[2],2],'</font>')})
-      output$rating2 <- renderText({c('Rated ',recommendation[random2[2],7])})
-      output$desc2 <- renderText({recommendation[random2[2],8]})
+      output$title2 <- renderText({c('<font size="5">',recommendation[random[2],2],'</font>')})
+      output$rating2 <- renderText({c('Rated ',recommendation[random[2],7])})
+      output$desc2 <- renderText({recommendation[random[2],8]})
     } else {
       src2 = mydata[random[2],1]
       output$picture2 <- renderText({c('<img src="',src2,'" width="188" height="274">')})
-      output$title2 <- renderText({c('<font size="5">',recommendation[random[2],2],'</font>')})
+      output$title2 <- renderText({c('<font size="5">',mydata[random[2],2],'</font>')})
       output$rating2 <- renderText({c('Rated ',mydata[random[2],7])})
       output$desc2 <- renderText({mydata[random[2],8]})
     }
     
-    if(!is.na(recommendation[random2[3],1])){
-      src3 = recommendation[random2[3],1]
+    if(!is.na(recommendation[random[3],1])){
+      src3 = recommendation[random[3],1]
       output$picture3 <- renderText({c('<img src="',src3,'" width="188" height="274">')})
-      output$title3 <- renderText({c('<font size="5">',recommendation[random2[3],2],'</font>')})
-      output$rating3 <- renderText({c('Rated ',recommendation[random2[3],7])})
-      output$desc3 <- renderText({recommendation[random2[3],8]})
+      output$title3 <- renderText({c('<font size="5">',recommendation[random[3],2],'</font>')})
+      output$rating3 <- renderText({c('Rated ',recommendation[random[3],7])})
+      output$desc3 <- renderText({recommendation[random[3],8]})
     } else {
       src3 = mydata[random[3],1]
       output$picture3 <- renderText({c('<img src="',src3,'" width="188" height="274">')})
-      output$title3 <- renderText({c('<font size="5">',recommendation[random[3],2],'</font>')})
+      output$title3 <- renderText({c('<font size="5">',mydata[random[3],2],'</font>')})
       output$rating3 <- renderText({c('Rated ',mydata[random[3],7])})
       output$desc3 <- renderText({mydata[random[3],8]})
     }
     
-    if(!is.na(recommendation[random2[4],1])){
-      src4 = recommendation[random2[4],1]
+    if(!is.na(recommendation[random[4],1])){
+      src4 = recommendation[random[4],1]
       output$picture4 <- renderText({c('<img src="',src4,'" width="188" height="274">')})
-      output$title4 <- renderText({c('<font size="5">',recommendation[random2[4],2],'</font>')})
-      output$rating4 <- renderText({c('Rated ',recommendation[random2[4],7])})
-      output$desc4 <- renderText({recommendation[random2[4],8]})
+      output$title4 <- renderText({c('<font size="5">',recommendation[random[4],2],'</font>')})
+      output$rating4 <- renderText({c('Rated ',recommendation[random[4],7])})
+      output$desc4 <- renderText({recommendation[random[4],8]})
     } else {
       src4 = mydata[random[4],1]
       output$picture4 <- renderText({c('<img src="',src4,'" width="188" height="274">')})
-      output$title4 <- renderText({c('<font size="5">',recommendation[random[4],2],'</font>')})
+      output$title4 <- renderText({c('<font size="5">',mydata[random[4],2],'</font>')})
       output$rating4 <- renderText({c('Rated ',mydata[random[4],7])})
       output$desc4 <- renderText({mydata[random[4],8]})
     }
     
-    if(!is.na(recommendation[random2[5],1])){
-      src5 = recommendation[random2[5],1]
+    if(!is.na(recommendation[random[5],1])){
+      src5 = recommendation[random[5],1]
       output$picture5 <- renderText({c('<img src="',src5,'" width="188" height="274">')})
-      output$title5 <- renderText({c('<font size="5">',recommendation[random2[5],2],'</font>')})
-      output$rating5 <- renderText({c('Rated ',recommendation[random2[5],7])})
-      output$desc5 <- renderText({recommendation[random2[5],8]})
+      output$title5 <- renderText({c('<font size="5">',recommendation[random[5],2],'</font>')})
+      output$rating5 <- renderText({c('Rated ',recommendation[random[5],7])})
+      output$desc5 <- renderText({recommendation[random[5],8]})
     } else {
       src5 = mydata[random[5],1]
       output$picture5 <- renderText({c('<img src="',src5,'" width="188" height="274">')})
-      output$title5 <- renderText({c('<font size="5">',recommendation[random[5],2],'</font>')})
+      output$title5 <- renderText({c('<font size="5">',mydata[random[5],2],'</font>')})
       output$rating5 <- renderText({c('Rated ',mydata[random[5],7])})
       output$desc5 <- renderText({mydata[random[5],8]})
     }
