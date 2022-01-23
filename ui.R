@@ -17,7 +17,6 @@ library(tibble)
 library(data.table)
 
 # read the data set
-#mydata <- data.frame(read.csv("imdb_top_1000.csv"))
 mydata <- data.frame(read.csv("https://raw.githubusercontent.com/PIEthonista/DSC-Data-Hosting/main/imdb_top_1000.csv"))
 # filter data and get the important points needed for customer
 displaydata <- mydata[-c(9,15,16)]
@@ -35,7 +34,6 @@ recommendationmovie <- movie [,-14]
 
 shinyUI(fluidPage(
   useShinyjs(),
-  #theme = shinytheme("readable"), #Select a theme for shiny
   theme = shinytheme("sandstone"), #Select a theme for shiny
   navbarPage(
     HTML(paste("<p><font color = '#6495ED' font size = '5' font face = 'Incised901 Nd BT'>",
@@ -64,8 +62,7 @@ shinyUI(fluidPage(
                       style = "color:#4682B4")
                ),
                mainPanel(
-                 #uiOutput("img"),
-                 img(src="Poster.png", height="100%", width="100%",align="center"),
+                 htmlOutput("poster"),
                  h6("Compilation of movies and TV shows",align = "center",
                     style = "color:#6495ED"),
                )
@@ -157,31 +154,31 @@ shinyUI(fluidPage(
                       htmlOutput("title1"),
                       textOutput("rating1"),
                       textOutput("desc1")
-                      ),style="height=200px;background-color: white;color:black",
+               ),style="height=200px;background-color: white;color:black",
                column(2,
                       htmlOutput("picture2"),
                       htmlOutput("title2"),
                       textOutput("rating2"),
                       textOutput("desc2")
-                      ),style="height=200px;background-color: white;color:black",
+               ),style="height=200px;background-color: white;color:black",
                column(2,
                       htmlOutput("picture3"),
                       htmlOutput("title3"),
                       textOutput("rating3"),
                       textOutput("desc3")
-                      ),style="height=200px;background-color: white;color:black",
+               ),style="height=200px;background-color: white;color:black",
                column(2,
                       htmlOutput("picture4"),
                       htmlOutput("title4"),
                       textOutput("rating4"),
                       textOutput("desc4")
-                      ),style="height=200px;background-color: white;color:black",
+               ),style="height=200px;background-color: white;color:black",
                column(2,
                       htmlOutput("picture5"),
                       htmlOutput("title5"),
                       textOutput("rating5"),
                       textOutput("desc5")
-                      ),style="height=200px;background-color: white;color:black",
+               ),style="height=200px;background-color: white;color:black",
                column(1,"")
              )
     ),
@@ -227,10 +224,7 @@ shinyUI(fluidPage(
                         div(class="panel panel-default",
                             div(class="panel-body",
                                 width="600px",align="center",
-                                div(
-                                  tags$img(src="jiayu.jpg",
-                                           width="80px",height="140px")
-                                ),
+                                htmlOutput("jiayu"),
                                 div(
                                   tags$h5("Lim Jia Yu"),
                                   tags$h6("Project Lead")
@@ -243,10 +237,7 @@ shinyUI(fluidPage(
                         div(class = "panel panel-default",
                             div(class="panel-body",
                                 width="600px",align="center",
-                                div(
-                                  tags$img(src="yixian.jpg",
-                                           width="80px",height="140px")
-                                ),
+                                htmlOutput("yixian"),
                                 div(
                                   tags$h5("Goh Yi Xian"),
                                   tags$h6("Web Developer")
@@ -259,10 +250,7 @@ shinyUI(fluidPage(
                         div(class="panel panel-default",
                             div(class="panel-body",
                                 width="600px",align="center",
-                                div(
-                                  tags$img(src="congji.jpg",
-                                           width="80px",height="140px")
-                                ),
+                                htmlOutput("congji"),
                                 div(
                                   tags$h5("Jesson Law Cong Ji"),
                                   tags$h6("Backend Developer")
@@ -275,10 +263,7 @@ shinyUI(fluidPage(
                         div(class="panel panel-default",
                             div(class="panel-body",
                                 width="600px",align="center",
-                                div(
-                                  tags$img(src="huoyiqing.jpg",
-                                           width="80px",height="140px")
-                                ),
+                                htmlOutput("yiqing"),
                                 div(
                                   tags$h5("Huo Yi Qing"),
                                   tags$h6("Server Developer")
@@ -291,10 +276,7 @@ shinyUI(fluidPage(
                         div(class="panel panel-default",
                             div(class="panel-body",
                                 width="600px",align="center",
-                                div(
-                                  tags$img(src="bingbing.jpg",
-                                           width="80px",height="140px")
-                                ),
+                                htmlOutput("bingbing"),
                                 div(
                                   tags$h5("Lyu Bin Bin"),
                                   tags$h6("Website Designer")
