@@ -304,7 +304,19 @@ shinyServer(function(input, output, session) {
     #for NAs
     random<-sample(1:nrow(moviee), 5, replace=FALSE)
     #for not NAs
-    random2 <- sample(1:nrow(recommendation), 5, replace=FALSE)
+    if(nrow(recommendation)==0){
+      random2 <- sample(1:nrow(moviee), 5, replace=FALSE)
+    } else if(nrow(recommendation)==1){
+      random2 <- c(sample(1:nrow(moviee), 4, replace=FALSE), sample(1:nrow(recommendation), 1, replace=FALSE))
+    } else if(nrow(recommendation)==2){
+      random2 <- c(sample(1:nrow(moviee), 3, replace=FALSE), sample(1:nrow(recommendation), 2, replace=FALSE))
+    } else if(nrow(recommendation)==3){
+      random2 <- c(sample(1:nrow(moviee), 2, replace=FALSE), sample(1:nrow(recommendation), 3, replace=FALSE))
+    } else if(nrow(recommendation)==4){
+      random2 <- c(sample(1:nrow(moviee), 1, replace=FALSE), sample(1:nrow(recommendation), 4, replace=FALSE))
+    } else if(nrow(recommendation)>=5){
+      random2 <- sample(1:nrow(recommendation), 5, replace=FALSE)
+    }
 
     if(!is.na(recommendation[random2[1],1])){
       src1 = recommendation[random2[1],1]
