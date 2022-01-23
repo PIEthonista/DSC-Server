@@ -20,13 +20,13 @@ library(data.table)
 mydata <- data.frame(read.csv("https://raw.githubusercontent.com/PIEthonista/DSC-Data-Hosting/main/imdb_top_1000.csv"))
 # filter data and get the important points needed for customer
 displaydata <- mydata[-c(9,15,16)]
-#filter out drama data set
+# filter out drama data set
 dramavalidity <- data.frame(str_detect(displaydata$Genre, "Drama"))
 dramafilter <- cbind(displaydata, drama = dramavalidity[,1])
 drama <- dramafilter[!(dramafilter$drama=="FALSE"),]
 dramaa <- drama[,-c(1,14)]
 recommendationdrama <- drama [,-14]
-#filter out movie data set
+# filter out movie data set
 movie <- dramafilter[!(dramafilter$drama=="TRUE"),]
 moviee <- movie [,-c(1,14)]
 recommendationmovie <- movie [,-14]
@@ -127,7 +127,6 @@ shinyUI(fluidPage(
                  
                  checkboxInput("kids","Suitable for kids",value=FALSE),
                  
-                 #submitButton("Search",icon("search",lib="glyphicon"))),
                  actionButton("search", "Search",icon("search",lib="glyphicon")),
                  width=2),
                
@@ -135,7 +134,6 @@ shinyUI(fluidPage(
                  fluidRow(
                    h1(textOutput("greeting")),
                    dataTableOutput("Drama")
-                   #It will display data table that show a list of movie or TV shows
                  ),
                  width=10
                )
