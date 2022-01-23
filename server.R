@@ -1,6 +1,36 @@
-library(shiny)
+# import the required library
 library(dplyr)
 library(stringr)
+library(png)
+library(shinyjs)
+library(visNetwork)
+library(rintrojs)
+library(shiny)
+library(shinythemes)
+library(shinyWidgets)
+library(readxl)
+library(readr)
+library(shinydashboard)
+library(shinydisconnect)
+library(DT)
+library(tibble)
+library(data.table)
+
+# read the data set
+mydata <- data.frame(read.csv("https://raw.githubusercontent.com/PIEthonista/DSC-Data-Hosting/main/imdb_top_1000.csv"))
+# filter data and get the important points needed for customer
+displaydata <- mydata[-c(9,15,16)]
+# filter out drama data set
+dramavalidity <- data.frame(str_detect(displaydata$Genre, "Drama"))
+dramafilter <- cbind(displaydata, drama = dramavalidity[,1])
+drama <- dramafilter[!(dramafilter$drama=="FALSE"),]
+dramaa <- drama[,-c(1,14)]
+recommendationdrama <- drama [,-14]
+# filter out movie data set
+movie <- dramafilter[!(dramafilter$drama=="TRUE"),]
+moviee <- movie [,-c(1,14)]
+recommendationmovie <- movie [,-14]
+
 
 shinyServer(function(input, output, session) {
   #output the entered name
@@ -8,7 +38,7 @@ shinyServer(function(input, output, session) {
   output$greeting <- renderText(string())
   
   poster <- "https://github.com/PIEthonista/DSC-Server/raw/main/www/Poster.png"
-  output$poster <- renderText({c('<img src="',poster,'" width="990" height="500">')})
+  output$poster <- renderText({c('<img src="',poster,'" width="975" height="500">')})
   jiayu <- "https://github.com/PIEthonista/DSC-Server/raw/main/www/jiayu.JPG"
   output$jiayu <- renderText({c('<img src="',jiayu,'" width="100" height="150">')})
   yixian <- "https://github.com/PIEthonista/DSC-Server/raw/main/www/yixian.jpg"

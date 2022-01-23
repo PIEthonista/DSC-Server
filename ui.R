@@ -44,7 +44,7 @@ shinyUI(fluidPage(
              sidebarLayout(
                sidebarPanel(
                  h3("Netflix Movies and TV Shows Recommenders"),
-                 span("This system seeks to predict or filter preferences according to the your choices.",
+                 span("This system seeks to filter and predict your preferences according to your choices.",
                       style = "color:#4682B4"),
                  br(),
                  br(),
@@ -59,7 +59,11 @@ shinyUI(fluidPage(
                       style = "color:#4682B4"),
                  br(),
                  span("Last but not least, sit back and enjoy the show!",
-                      style = "color:#4682B4")
+                      style = "color:#4682B4"),
+                 br(),
+                 h4("Special Benefit for Old User"),
+                 span("You may browse the 'Recommendation' tab directly to find out the movies you may like based on your search history",
+                      style = "color:#4682B4"),
                ),
                mainPanel(
                  htmlOutput("poster"),
